@@ -6,6 +6,9 @@ import css from './styles/style.styl'
 
 // Import components
 import App from './components/App'
+import Home from './components/Home'
+import Issues from './components/Issues'
+import Metrics from './components/Metrics'
 
 // Import react router deps
 import { Router, Route, IndexRoute } from 'react-router';
@@ -16,6 +19,9 @@ const router = (
   <Provider store={ store }>
     <Router history={ history }>
       <Route path="/" component={ App }>
+        <IndexRoute component={ Home }></IndexRoute>
+        <Route path="/issues" component={ Issues }></Route>
+        <Route path="/metrics" component={ Metrics }></Route>
       </Route>
     </Router>
   </Provider>
