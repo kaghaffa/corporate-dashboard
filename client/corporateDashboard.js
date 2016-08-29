@@ -22,6 +22,7 @@ const router = (
         <IndexRoute component={ Home }></IndexRoute>
         <Route path="/issues" component={ Issues }></Route>
         <Route path="/metrics" component={ Metrics }></Route>
+        <Route path='*' component={ Home } />
       </Route>
     </Router>
   </Provider>
