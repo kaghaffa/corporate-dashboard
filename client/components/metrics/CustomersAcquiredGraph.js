@@ -44,7 +44,7 @@ const Sidebar = React.createClass({
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-           label: "Customers Acquired",
+            label: "Customers Acquired",
             data
           }
         ]

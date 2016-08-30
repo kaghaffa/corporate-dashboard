@@ -2,34 +2,43 @@ import React from 'react';
 
 const Sidebar = React.createClass({
   propTypes: {
-    issues: React.PropTypes.array.isRequired
+    issuesByMonth: React.PropTypes.object.isRequired
+  },
+
+  _convertIntToMonth(num) {
+    return {
+      1: 'Jan',
+      2: 'Feb',
+      3: 'Mar',
+      4: 'Apr',
+      5: 'May',
+      6: 'Jun',
+      7: 'Jul',
+      8: 'Aug',
+      9: 'Sep',
+      10: 'Oct',
+      11: 'Nov',
+      12: 'Dec',
+    }[num]
   },
 
   componentDidMount() {
+    var months = Object.keys(this.props.issuesByMonth).map((monthNum) =>
+      this._convertIntToMonth(monthNum)
+    );
+    var numIssues = Object.values(this.props.issuesByMonth);
+
     var ctx = this.refs.reportedIssuesChart;
     var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: months,
         datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
+          label: '# of Issues per Month',
+          data: numIssues,
+          backgroundColor: "rgba(255,99,132,0.2)",
+          borderColor: "rgba(255,99,132,1)",
+          pointBackgroundColor: "rgba(255,99,132,1)",
           borderWidth: 1
         }]
       },

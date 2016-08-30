@@ -6,6 +6,12 @@ const Issues = React.createClass({
     issues: React.PropTypes.array
   },
 
+  _mergeTimestampStr(date, time) {
+    if (date && time) {
+      return date + ' ' + time;
+    }
+  },
+
   render() {
     var issuesTable = this.props.issues.map((issue) =>
       <li>{ JSON.stringify(issue) }</li>
@@ -33,7 +39,12 @@ const Issues = React.createClass({
             header={<Cell>Opened</Cell>}
             cell={({rowIndex, ...props}) => (
               <Cell {...props}>
-                {this.props.issues[rowIndex].open_date}
+                {
+                  this._mergeTimestampStr(
+                    this.props.issues[rowIndex].open_date,
+                    this.props.issues[rowIndex].open_time
+                  )
+                }
               </Cell>
             )}
             width={175}
@@ -42,7 +53,12 @@ const Issues = React.createClass({
             header={<Cell>Closed</Cell>}
             cell={({rowIndex, ...props}) => (
               <Cell {...props}>
-                {this.props.issues[rowIndex].closed_date}
+                {
+                  this._mergeTimestampStr(
+                    this.props.issues[rowIndex].closed_date,
+                    this.props.issues[rowIndex].closed_time
+                  )
+                }
               </Cell>
             )}
             width={175}

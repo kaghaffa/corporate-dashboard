@@ -5,11 +5,48 @@ import ReportedIssuesChart from './metrics/ReportedIssuesChart';
 import DataWidget from './metrics/DataWidget';
 
 const Metrics = React.createClass({
-  propTypes: {
+  _parseIssuesData() {
+    this.parsedIssues = {
+      openIssues: 0,
+      issuesByMonth: {}
+    };
+    this.props.issues.forEach((issue) => {
+      if (!issue.closed_date) {
+        this.parsedIssues.openIssues++;
+      }
+
+      var month = issue.open_date.split('/')[0]
+      var issuesByMonth = this.parsedIssues.issuesByMonth[month];
+      this.parsedIssues.issuesByMonth[month] = issuesByMonth ? issuesByMonth + 1 : 1
+    });
+  },
+
+  componentWillMount() {
+    this._parseIssuesData()
+  },
+
+  _openIssuesStr() {
+    var str = this.parsedIssues.openIssues
+
+    if (this.parsedIssues.openIssues == 1) {
+      return str + ' Open Issue';
+    } else {
+      return str + ' Open Issues';
+    }
+  },
+
+  _customersAcquiredStr() {
+    var months = Object.values(this.parsedIssues.issuesByMonth);
+    var customersAcquired = months[months.length - 1]
+
+    if (customersAcquired == 1) {
+      return customersAcquired + ' Customer Acquired'
+    } else {
+      return customersAcquired + ' Customers Acquired'
+    }
   },
 
   render() {
-    console.log(this.props)
     return (
       <div className="metrics">
         <div className="page-title">
@@ -22,20 +59,20 @@ const Metrics = React.createClass({
           </div>
 
           <div className="col-md-5 col-md-offset-1">
-            <ReportedIssuesChart />
+            <ReportedIssuesChart issuesByMonth={ this.parsedIssues.issuesByMonth } />
           </div>
         </div>
 
         <div className="data-widgets">
           <div className="row">
             <div className="col-md-3">
-              <DataWidget data={ "15 Open Issues" } />
+              <DataWidget data={ this._openIssuesStr() } />
             </div>
             <div className="col-md-3 col-md-offset-1">
-              <DataWidget data={ "15 Open Issues" } />
+              <DataWidget data={ this._customersAcquiredStr() } />
             </div>
             <div className="col-md-3 col-md-offset-1">
-              <DataWidget data={ "15 Open Issues" } />
+              <DataWidget data={ "28 Closed Issues" } />
             </div>
           </div>
         </div>
