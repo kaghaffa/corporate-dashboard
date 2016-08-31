@@ -5,16 +5,9 @@ import map from '../../data/map';
 
 const EmployeeMap = React.createClass({
   componentDidMount() {
-    var data = this.props.locations.map(function(location) {
-      return {
-        'hc-key': location.location,
-        value: location.num_employees
-      }
-    });
-
     Highcharts.maps['custom/world-robinson-highres'] = map;
 
-    var chart = new Highcharts.Map({
+    this.map = new Highcharts.Map({
       title : {
         text : 'Employees Worldwide'
       },
@@ -34,7 +27,7 @@ const EmployeeMap = React.createClass({
       },
 
       series : [{
-        data,
+        data: this._mapData(this.props.locations),
         mapData: Highcharts.maps['custom/world-robinson-highres'],
         joinBy: 'hc-key',
         name: 'Random data',
@@ -48,6 +41,20 @@ const EmployeeMap = React.createClass({
           format: '{point.name}'
         }
       }]
+    });
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log(this.map.series[0].data)
+    this.map.series[0].setData(this._mapData(nextProps.locations), true);
+  },
+
+  _mapData(locations) {
+    return locations.map(function(location) {
+      return {
+        'hc-key': location.location,
+        value: location.num_employees
+      }
     });
   },
 

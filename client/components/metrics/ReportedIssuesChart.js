@@ -22,23 +22,28 @@ const Sidebar = React.createClass({
     }[num]
   },
 
-  componentDidMount() {
-    var months = Object.keys(this.props.issuesByMonth).map((monthNum) =>
+  _barChartLabels(issuesByMonth) {
+    return Object.keys(issuesByMonth).map((monthNum) =>
       this._convertIntToMonth(monthNum)
     );
-    var numIssues = Object.values(this.props.issuesByMonth);
+  },
 
+  _barChartData(issuesByMonth) {
+    return Object.values(issuesByMonth);
+  },
+
+  componentDidMount() {
     var ctx = this.refs.reportedIssuesChart;
-    var myChart = new Chart(ctx, {
+    this.reportedIssuesChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: months,
+        labels: this._barChartLabels(this.props.issuesByMonth),
         datasets: [{
           label: '# of Issues per Month',
-          data: numIssues,
-          backgroundColor: "rgba(255,99,132,0.2)",
-          borderColor: "rgba(255,99,132,1)",
-          pointBackgroundColor: "rgba(255,99,132,1)",
+          data: this._barChartData(this.props.issuesByMonth),
+          backgroundColor: 'rgba(255,99,132,0.2)',
+          borderColor: 'rgba(255,99,132,1)',
+          pointBackgroundColor: 'rgba(255,99,132,1)',
           borderWidth: 1
         }]
       },
@@ -52,6 +57,12 @@ const Sidebar = React.createClass({
         }
       }
     });
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    this.reportedIssuesChart.data.datasets[0].data = this._barChartData(nextProps.issuesByMonth);
+    this.reportedIssuesChart.data.labels = this._barChartLabels(nextProps.issuesByMonth);
+    this.reportedIssuesChart.update();
   },
 
   render() {

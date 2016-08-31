@@ -6,24 +6,28 @@ const Sidebar = React.createClass({
     customers: React.PropTypes.array.isRequired
   },
 
-  componentDidMount() {
-    var labels = this.props.customers.map((customer) => customer.date)
-    var arr = []
-    var data = this.props.customers
-      .map((customer) => customer.customers_acquired)
-      .reduce(function (a, b) {
-        if (a.length) {
-          b += a[a.length - 1];
-        }
-        a.push(b);
-        return a;
-      }, [])
+  _lineChartData(customers) {
+  return customers
+    .map((customer) => customer.customers_acquired)
+    .reduce(function (a, b) {
+      if (a.length) {
+        b += a[a.length - 1];
+      }
+      a.push(b);
+      return a;
+    }, [])
+  },
 
+  _lineChartLabels(customers) {
+    return customers.map((customer) => customer.date);
+  },
+
+  componentDidMount() {
     var ctx = this.refs.custAcqChart;
-    var myLineChart = new Chart(ctx, {
+    this.customersAcquiredChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels,
+        labels: this._lineChartLabels(this.props.customers),
         datasets: [
           {
             fill: false,
@@ -44,11 +48,17 @@ const Sidebar = React.createClass({
             pointRadius: 1,
             pointHitRadius: 10,
             label: 'Customers Acquired',
-            data
+            data: this._lineChartData(this.props.customers)
           }
         ]
       }
     });
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    this.customersAcquiredChart.data.datasets[0].data = this._lineChartData(nextProps.customers);
+    this.customersAcquiredChart.data.labels = this._lineChartLabels(nextProps.customers);
+    this.customersAcquiredChart.update();
   },
 
   render() {

@@ -15,14 +15,14 @@ const Metrics = React.createClass({
         this.parsedIssues.openIssues++;
       }
 
-      var month = issue.open_date.split('/')[0]
+      var month = issue.open_date.split('/')[0];
       var issuesByMonth = this.parsedIssues.issuesByMonth[month];
-      this.parsedIssues.issuesByMonth[month] = issuesByMonth ? issuesByMonth + 1 : 1
+      this.parsedIssues.issuesByMonth[month] = issuesByMonth ? issuesByMonth + 1 : 1;
     });
   },
 
   componentWillMount() {
-    this._parseIssuesData()
+    this._parseIssuesData();
   },
 
   _openIssuesStr() {
@@ -36,17 +36,22 @@ const Metrics = React.createClass({
   },
 
   _customersAcquiredStr() {
-    var months = Object.values(this.parsedIssues.issuesByMonth);
-    var customersAcquired = months[months.length - 1]
+    var customersToday = this.props.customers[this.props.customers.length - 1];
+    if (!customersToday) {
+      return '0 Customers acquired';
+    }
 
+    var customersAcquired = customersToday.customers_acquired;
     if (customersAcquired == 1) {
-      return customersAcquired + ' Customer Acquired'
+      return customersAcquired + ' Customer Acquired';
     } else {
-      return customersAcquired + ' Customers Acquired'
+      return customersAcquired + ' Customers Acquired';
     }
   },
 
   render() {
+    this._parseIssuesData();
+
     return (
       <div className="metrics">
         <div className="page-title">

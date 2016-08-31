@@ -13,16 +13,6 @@ const Issues = React.createClass({
   },
 
   render() {
-    var issuesTable = this.props.issues.map((issue) =>
-      <li>{ JSON.stringify(issue) }</li>
-    );
-
-    const rows = [
-      ['a1', 'b1', 'c1'],
-      ['a2', 'b2', 'c2'],
-      ['a3', 'b3', 'c3']
-    ];
-
     return (
       <div className="issues">
         <div className="page-title">
@@ -31,7 +21,7 @@ const Issues = React.createClass({
 
         <Table
           rowHeight={50}
-          rowsCount={100}
+          rowsCount={this.props.issues.length}
           width={1050}
           maxHeight={1000}
           headerHeight={50}>
