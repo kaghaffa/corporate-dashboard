@@ -10,11 +10,7 @@
     "start": "node devServer.js",
     "tunnel": "browser-sync start --proxy localhost:7770 --tunnel wesbos"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wesbos/Learn-Redux.git"
-  },
-  "author": "Wes Bos",
+  "author": "Kayvon Ghaffar",
   "license": "MIT",
   "homepage": "https://github.com/wesbos/Learn-Redux",
   "dependencies": {
@@ -29,11 +25,13 @@
     "babel-preset-react": "^6.5.0",
     "chart.js": "^2.2.2",
     "css-loader": "^0.23.1",
+    "csv-parse": "^1.1.7",
     "eslint": "^2.9.0",
     "eslint-plugin-babel": "^3.2.0",
     "eslint-plugin-react": "^5.0.1",
     "express": "^4.13.4",
     "fixed-data-table": "^0.6.3",
+    "highcharts": "^4.2.6",
     "raven-js": "^2.3.0",
     "react": "^15.0.2",
     "react-addons-css-transition-group": "^15.0.2",
