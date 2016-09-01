@@ -1,5 +1,11 @@
 import React from 'react';
 
+import values from 'object.values';
+
+if (!Object.values) {
+    values.shim();
+}
+
 const Sidebar = React.createClass({
   propTypes: {
     issuesByMonth: React.PropTypes.object.isRequired
