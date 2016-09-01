@@ -10,6 +10,7 @@ const Sidebar = React.createClass({
   return customers
     .map((customer) => customer.customers_acquired)
     .reduce(function (a, b) {
+      b = parseInt(b);
       if (a.length) {
         b += a[a.length - 1];
       }
@@ -34,7 +35,6 @@ const Sidebar = React.createClass({
             lineTension: 0.1,
             backgroundColor: 'rgba(75,192,192,0.4)',
             borderColor: 'rgba(75,192,192,1)',
-            borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',

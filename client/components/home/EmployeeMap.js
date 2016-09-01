@@ -45,15 +45,15 @@ const EmployeeMap = React.createClass({
   },
 
   componentWillUpdate(nextProps, nextState) {
-    console.log(this.map.series[0].data)
-    this.map.series[0].setData(this._mapData(nextProps.locations), true);
+    this.map.series[0].setData(this._mapData(nextProps.locations));
+    this.map.redraw();
   },
 
   _mapData(locations) {
     return locations.map(function(location) {
       return {
         'hc-key': location.location,
-        value: location.num_employees
+        value: parseInt(location.num_employees)
       }
     });
   },
