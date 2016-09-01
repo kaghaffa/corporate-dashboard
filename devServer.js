@@ -18,11 +18,5 @@ app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(process.env.port || 7770, 'localhost', function(err) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-
-  console.log('Listening at http://localhost:7770');
-});
+app.set('port', process.env.PORT || 7770);
+app.listen(app.get('port'));
