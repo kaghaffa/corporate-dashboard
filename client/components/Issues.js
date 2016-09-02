@@ -12,6 +12,19 @@ const Issues = React.createClass({
     }
   },
 
+  componentWillMount() {
+    var _this = this;
+    var useCsv = true;
+    this.interval = setInterval(function() {
+      useCsv = !useCsv
+      _this.props.updateIssues(useCsv);
+    }, 3000);
+  },
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  },
+
   render() {
     var issuesData = this.props.issues.map(function(issue) {
       return {
@@ -21,7 +34,8 @@ const Issues = React.createClass({
         id: issue.id,
         email: issue.email,
         status: issue.status,
-        employee_name: issue.employee_name
+        employee_name: issue.employee_name,
+        description: issue.description
       };
     }, this);
 
@@ -37,26 +51,26 @@ const Issues = React.createClass({
             condensed={true}
             search={true}
             hover={true}>
-            <TableHeaderColumn dataField="id" isKey={true} dataAlign="center">
-              ID
-            </TableHeaderColumn>
-            <TableHeaderColumn dataField="opened" dataAlign="center">
+            <TableHeaderColumn dataField="opened" isKey={true} dataAlign="center" width="160">
               Opened
             </TableHeaderColumn>
-            <TableHeaderColumn dataField="closed" dataAlign="center">
+            <TableHeaderColumn dataField="closed" dataAlign="center" width="150">
               Closed
             </TableHeaderColumn>
-            <TableHeaderColumn dataField="customer_name" dataAlign="center">
-              Customer Name
+            <TableHeaderColumn dataField="customer_name" dataAlign="center" width="150">
+              Customer
             </TableHeaderColumn>
-            <TableHeaderColumn dataField="email" dataAlign="center">
+            <TableHeaderColumn dataField="email" dataAlign="center" width="200">
               Email
             </TableHeaderColumn>
-            <TableHeaderColumn dataField="status" dataAlign="center">
+            <TableHeaderColumn dataField="status" dataAlign="center" width="65">
               Status
             </TableHeaderColumn>
-            <TableHeaderColumn dataField="employee_name" dataAlign="center">
-              Employee Name
+            <TableHeaderColumn dataField="employee_name" dataAlign="center" width="150">
+              Employee
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="description" dataAlign="center" width="120">
+              Description
             </TableHeaderColumn>
           </BootstrapTable>
         </div>

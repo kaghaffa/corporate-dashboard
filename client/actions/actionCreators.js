@@ -12,6 +12,8 @@ fetch('customers.csv').then(function(response) {
     response.text().then(function(res) {
       customerCsvData = Utils.parseCsv(res);
     })
+  } else {
+    issuesCsvData = { error: 'requestFailure' }
   }
 });
 
@@ -21,6 +23,8 @@ fetch('locations.csv').then(function(response) {
     response.text().then(function(res) {
       locationsCsvData = Utils.parseCsv(res);
     })
+  } else {
+    issuesCsvData = { error: 'requestFailure' }
   }
 });
 
@@ -30,6 +34,8 @@ fetch('issues.csv').then(function(response) {
     response.text().then(function(res) {
       issuesCsvData = Utils.parseCsv(res);
     })
+  } else {
+    issuesCsvData = { error: 'requestFailure' }
   }
 });
 

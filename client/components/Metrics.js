@@ -23,6 +23,17 @@ const Metrics = React.createClass({
 
   componentWillMount() {
     this._parseIssuesData();
+    var _this = this;
+    var useCsv = true;
+    this.interval = setInterval(function() {
+      useCsv = !useCsv
+      _this.props.updateIssues(useCsv);
+      _this.props.updateCustomers(useCsv);
+    }, 3000);
+  },
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   },
 
   _openIssuesStr() {
