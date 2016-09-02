@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Column, Cell } from 'fixed-data-table';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 const Issues = React.createClass({
   propTypes: {
@@ -13,83 +13,53 @@ const Issues = React.createClass({
   },
 
   render() {
+    var issuesData = this.props.issues.map(function(issue) {
+      return {
+        opened: this._mergeTimestampStr(issue.open_date, issue.open_time),
+        closed: this._mergeTimestampStr(issue.closed_date, issue.closed_time),
+        customer_name: issue.customer_name,
+        id: issue.id,
+        email: issue.email,
+        status: issue.status,
+        employee_name: issue.employee_name
+      };
+    }, this);
+
     return (
       <div className="issues">
         <div className="page-title">
           <h1>Issues</h1>
         </div>
 
-        <Table
-          rowHeight={50}
-          rowsCount={this.props.issues.length}
-          width={1050}
-          maxHeight={1000}
-          headerHeight={50}>
-          <Column
-            header={<Cell>Opened</Cell>}
-            cell={({rowIndex, ...props}) => (
-              <Cell {...props}>
-                {
-                  this._mergeTimestampStr(
-                    this.props.issues[rowIndex].open_date,
-                    this.props.issues[rowIndex].open_time
-                  )
-                }
-              </Cell>
-            )}
-            width={175}
-          />
-          <Column
-            header={<Cell>Closed</Cell>}
-            cell={({rowIndex, ...props}) => (
-              <Cell {...props}>
-                {
-                  this._mergeTimestampStr(
-                    this.props.issues[rowIndex].closed_date,
-                    this.props.issues[rowIndex].closed_time
-                  )
-                }
-              </Cell>
-            )}
-            width={175}
-          />
-          <Column
-            header={<Cell>Customer Name</Cell>}
-            cell={({rowIndex, ...props}) => (
-              <Cell {...props}>
-                {this.props.issues[rowIndex].customer_name}
-              </Cell>
-            )}
-            width={175}
-          />
-          <Column
-            header={<Cell>Email</Cell>}
-            cell={({rowIndex, ...props}) => (
-              <Cell {...props}>
-                {this.props.issues[rowIndex].email}
-              </Cell>
-            )}
-            width={175}
-          />
-          <Column
-            header={<Cell>Status</Cell>}
-            cell={({rowIndex, ...props}) => (
-              <Cell {...props}>
-                {this.props.issues[rowIndex].status}
-              </Cell>
-            )}
-            width={175}
-          />
-          <Column
-            header={<Cell>Employee Name</Cell>}
-            cell={({rowIndex, ...props}) => (
-              <Cell {...props}>
-                {this.props.issues[rowIndex].employee_name}
-              </Cell>
-            )}
-            width={175}
-          />
-        </Table>
+        <div className="issues-table">
+          <BootstrapTable data={issuesData}
+            striped={true}
+            condensed={true}
+            search={true}
+            hover={true}>
+            <TableHeaderColumn dataField="id" isKey={true} dataAlign="center">
+              ID
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="opened" dataAlign="center">
+              Opened
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="closed" dataAlign="center">
+              Closed
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="customer_name" dataAlign="center">
+              Customer Name
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="email" dataAlign="center">
+              Email
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="status" dataAlign="center">
+              Status
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="employee_name" dataAlign="center">
+              Employee Name
+            </TableHeaderColumn>
+          </BootstrapTable>
+        </div>
       </div>
     );
   }

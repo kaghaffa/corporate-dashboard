@@ -6,7 +6,7 @@ import Sidebar from './Sidebar'
 const Main = React.createClass({
   componentDidMount() {
     var _this = this;
-    var useCsv = true
+    var useCsv = true;
     setInterval(function() {
       useCsv = !useCsv
       _this.props.updateCustomers(useCsv);
